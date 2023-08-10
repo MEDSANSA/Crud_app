@@ -1,14 +1,13 @@
 import { useContext, useEffect } from 'react';
 import { GlobalContext } from './context/GlobalContainer';
-import { Button, Box, Container, FormControl, Table, Thead, Tbody, Tr, Th, TableContainer, } from '@chakra-ui/react';
+import { Button, Box, Container, FormControl, Table, Thead, Tbody, Tr, Th, TableContainer, Input } from '@chakra-ui/react';
 import Row from './components/Row';
 import { AiOutlinePlus, AiOutlineSearch } from "react-icons/ai";
-import Drawer from './components/Drawer';
 import DrawerBox from './components/Drawer';
 
 
 function App() {
-  const { users, fetchUsers, isOpen, onOpen, onClose } = useContext(GlobalContext);
+  const { users, fetchUsers, onOpen } = useContext(GlobalContext);
 
   useEffect(() => {
     fetchUsers();
@@ -18,24 +17,26 @@ function App() {
     <div className="App">
       <Container maxW={'full'} p="4" fontSize={'18px'}>
         <Box rounded="lg" boxShadow="base" p="4">
-          <box mt="2" gap={'2'} mb="4" display={'flex'}>
-            <FormControl >
-              <input type="text" size="md" />
+          <Box mt="2" gap={'2'} mb="4" display={'flex'} justifyContent="flex-end">
+            <FormControl flex="1">
+              <Input type="text" size="md" width="100%" />
             </FormControl>
             <Button
-              position={"right"}
               colorScheme='teal'
               variant='solid'
               maxW={"300px"}
               minW={"150px"}
               fontSize={"20px"}
-              leftIcon={<AiOutlineSearch />}>Search</Button>
-          </box>
+              leftIcon={<AiOutlineSearch />}
+            >
+              Search
+            </Button>
+          </Box>
         </Box>
-        <box>
+        <Box>
           <Box rounded="lg" boxShadow="base" mt="5">
-            <box p="4" justifyContent="space-between" display={'flex'}>
-              <text fontSize="xl" fontWeight="bold">
+            <Box p="4" justifyContent="space-between" display={'flex'}>
+              <text fontSize="4xl" as='b'>
                 liste des utilisateur
               </text>
               <Button
@@ -45,8 +46,11 @@ function App() {
                 minW={"150px"}
                 fontSize={"20px"}
                 leftIcon={<AiOutlinePlus />}
-                onClick={onOpen}>Add user</Button>
-            </box>
+                onClick={onOpen}
+              >
+                Add user
+              </Button>
+            </Box>
             <TableContainer>
               <Table variant='simple'>
                 <Thead>
@@ -70,10 +74,10 @@ function App() {
               </Table>
             </TableContainer>
           </Box>
-        </box>
+        </Box>
         <DrawerBox />
-      </Container >
-    </div >
+      </Container>
+    </div>
   );
 }
 

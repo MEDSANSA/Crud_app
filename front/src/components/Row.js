@@ -4,7 +4,7 @@ import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { GlobalContext } from "../context/GlobalContainer";
 
 const Row = ({ user }) => {
-    const { deleteUser } = useContext(GlobalContext);
+    const { deleteUser, onOpen, findUser } = useContext(GlobalContext);
 
     return (
         <Tr>
@@ -15,7 +15,10 @@ const Row = ({ user }) => {
             <Td>
                 <Box display={"flex"} gap={"1"}>
                     <Button colorScheme={'blue'}>
-                        <AiFillEdit />
+                        <AiFillEdit onClick={() => {
+                            onOpen();
+                            findUser(user.id);
+                        }} />
                     </Button>
                     <Button colorScheme='red' onClick={() => deleteUser(user.id)} key={user.id}>
                         <AiFillDelete />

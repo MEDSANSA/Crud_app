@@ -6,8 +6,7 @@ import Inputs from './Inputs';
 
 export default function DrawerBox() {
 
-    const { isOpen, onOpen, onClose, addUser, errors } = useContext(GlobalContext);
-
+    const { isOpen, onClose, addUser, errors, user } = useContext(GlobalContext);
     const [form, setForm] = useState({});
 
     const onChangeHandler = (e) => {
@@ -28,7 +27,6 @@ export default function DrawerBox() {
                 <DrawerContent>
                     <DrawerCloseButton />
                     <DrawerHeader>Create / Update your account</DrawerHeader>
-
                     <DrawerBody>
                         <Stack spacing={"24px"}>
                             <Inputs name="name" onChangeHandler={onChangeHandler} errors={errors?.name} />
@@ -36,7 +34,6 @@ export default function DrawerBox() {
                             <Inputs name="password" onChangeHandler={onChangeHandler} errors={errors?.password} />
                         </Stack>
                     </DrawerBody>
-
                     <DrawerFooter>
                         <Button variant='outline' mr={3} onClick={onClose}>
                             Cancel

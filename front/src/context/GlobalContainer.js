@@ -4,14 +4,13 @@ import { useDisclosure, useToast } from '@chakra-ui/react'
 export const GlobalContext = createContext();
 
 export default function Container({ children }) {
-    //useEffect is a React hook that accepts a callback function with side effects.
+
     const [users, setUsers] = useState([]);
-    const [errors, setErrors]= useState({});
+    const [user, setUser] = useState({});
+    const [errors, setErrors] = useState([]);
     const toast = useToast();//call the toast message
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-
-    //fetch data
     function fetchUsers() {
         fetch('http://localhost:5000/users')
             .then(res => {
@@ -25,7 +24,6 @@ export default function Container({ children }) {
             });
     }
 
-    //ajout data
     const addUser = (form, setForm) => {
         fetch('http://localhost:5000/users', {
             method: 'POST',
@@ -34,38 +32,35 @@ export default function Container({ children }) {
             },
             body: JSON.stringify(form),
         })
-        .then((res) => {
-            if (!res.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return res.json();
-        })
-        .then((data) => {
-            try {
-                setUsers((user) => [...user, data]);
-                toast({
-                    title: 'User Added!',
-                    status: 'success',
-                    duration: 3000,
-                    position: 'bottom',
-                });
-                onClose();
-                setForm({});
-            } catch (err) {
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return res.json();
+            })
+            .then((data) => {
+                try {
+                    setUsers((user) => [...user, data]);
+                    toast({
+                        title: 'User Added!',
+                        status: 'success',
+                        duration: 3000,
+                        position: 'bottom',
+                    });
+                    onClose();
+                    setForm({});
+                    fetchUsers();
+                } catch (err) {
+                    setErrors(err.message);
+                    console.error(err);
+                }
+            })
+            .catch((err) => {
                 setErrors(err.message);
                 console.error(err);
-            }
-        })
-        .catch((err) => {
-            setErrors(err.message);
-            console.error(err);
-        });
+            });
     };
-    
 
-
-
-    //delete data
     const deleteUser = (id) => {
         fetch(`http://localhost:5000/users/${id}`, {
             method: 'DELETE'
@@ -78,16 +73,26 @@ export default function Container({ children }) {
                     duration: 3000,
                     position: 'bottom',
                 });
+                fetchUsers();
             })
             .catch((err) => {
                 console.error(err);
             });
     };
 
+    const findUser = async (id) => {
+        try {
+            const res = await fetch(`http://localhost:5000/users/${id}`);
+            const data = await res.json();
+            setUser(data);
+        } catch (err) {
+            setErrors(err.message);
+        }
+    };
 
 
     return (
-        <GlobalContext.Provider value={{ users, fetchUsers, deleteUser, addUser, isOpen, onOpen, onClose, errors, setErrors }}>
+        <GlobalContext.Provider value={{ users, fetchUsers, deleteUser, addUser,findUser,setUser, isOpen, onOpen, onClose, errors, setErrors }}>
             {children}
         </GlobalContext.Provider>
     )
