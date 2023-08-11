@@ -44,15 +44,5 @@ export class UserController {
         await this.userservice.deleteUser(userId);
         return null;
     }
-
-    /*
-    //login
-    @Post('login')
-    async login(@Body('email') email: string,
-        @Body('password') password: string) {
-        const user = await this.userservice.login(email, password);
-        return user;
-        }
-    */
         
 }

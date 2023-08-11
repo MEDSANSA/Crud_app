@@ -75,27 +75,4 @@ export class UserService {
         }
     }
 
-    /*
-    //login function
-    async login(email: string, password: string) {
-        // Find the user by their email address and check that a valid password was provided
-        console.log("Login");
-        var user = null;
-        try {
-            user = await this.userModel.findOne({ email: email, password: password }).exec();
-            }
-        catch (error) {
-            throw new error('Could not find user.');
-            };
-        if (!user) {
-            throw new Error('Could not find user.');
-            };
-        return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            password: user.password,
-        };
-        }
-        */
 }

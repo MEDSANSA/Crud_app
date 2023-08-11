@@ -8,8 +8,29 @@ export default function Container({ children }) {
     const [users, setUsers] = useState([]);
     const [user, setUser] = useState({});
     const [errors, setErrors] = useState([]);
+    const [input, setInput] = useState("");
     const toast = useToast();//call the toast message
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    //back ne9s
+    const SearchUser = (input) => {
+        fetch(`http://localhost:5000/users/search/${input}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            setUsers(data);
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    }
+
 
     function fetchUsers() {
         fetch('http://localhost:5000/users')
@@ -92,7 +113,7 @@ export default function Container({ children }) {
 
 
     return (
-        <GlobalContext.Provider value={{ users, fetchUsers, deleteUser, addUser,findUser,setUser, isOpen, onOpen, onClose, errors, setErrors }}>
+        <GlobalContext.Provider value={{ users, fetchUsers, SearchUser, deleteUser, addUser, findUser, setUser, isOpen, onOpen, onClose, errors, setErrors,input, setInput }}>
             {children}
         </GlobalContext.Provider>
     )
