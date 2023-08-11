@@ -90,7 +90,7 @@ export default function Container({ children }) {
                 setUsers(user => user.filter(user => user._id !== id));
                 toast({
                     title: 'User Deleted!',
-                    status: 'success',
+                    status: 'error',
                     duration: 3000,
                     position: 'bottom',
                 });

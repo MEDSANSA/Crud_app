@@ -8,10 +8,10 @@ import SimpleSidebar from './components/SideBar';
 import { FaMoon, FaSun } from 'react-icons/fa'
 
 function App() {
-  const { users, fetchUsers, SearchUser, onOpen,input , setInput } = useContext(GlobalContext);
+  const { users, fetchUsers, SearchUser, onOpen, input, setInput } = useContext(GlobalContext);
 
   //color state
-  const { colorMode, toggleColorMode } = useColorMode();  
+  const { colorMode, toggleColorMode } = useColorMode();
 
   useEffect(() => {
     fetchUsers();

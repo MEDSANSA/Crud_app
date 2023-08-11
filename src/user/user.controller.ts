@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Param, Patch, Delete, Body } from "@nestjs/common";
+import { Controller, Post, Get, Param, Patch, Delete, Body, Query } from "@nestjs/common";
 import { UserService } from "./user.service";
 
 //controller qui va gérer les routes de l'api 
@@ -44,5 +44,11 @@ export class UserController {
         await this.userservice.deleteUser(userId);
         return null;
     }
-        
+
+    @Get('search')
+    async searchUsersByName(@Query('name') name: string) {
+        const users = await this.userservice.searchByName(name);
+        return users;
+    }
+
 }

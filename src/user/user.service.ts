@@ -75,4 +75,14 @@ export class UserService {
         }
     }
 
+    async searchByName(name: string) {
+        const users = await this.userModel.find({ name: name }).exec();
+        return users.map(user => ({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+        }));
+    }
+
 }
